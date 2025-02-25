@@ -1,0 +1,226 @@
+eva_1_9_crate table
+ 
+Type '\help' or '\?' for help; '\quit' to exit.
+ MySQL  JS > \sql
+Switching to SQL mode... Commands end with ;
+ MySQL  SQL > \c --mc root@localhost
+Creating a Classic session to 'root@localhost'
+Fetching global names for auto-completion... Press ^C to stop.
+Your MySQL connection id is 8
+Server version: 8.0.41 MySQL Community Server - GPL
+No default schema selected; type \use <schema> to set one.
+ MySQL  localhost:3306 ssl  SQL > use tbd_eva1;
+Default schema set to `tbd_eva1`.
+Fetching global names, object names from `tbd_eva1` for auto-completion... Press ^C to stop.
+ MySQL  localhost:3306 ssl  tbd_eva1  SQL > CREATE TABLE Customers (
+                                         ->   Cust_ID INT PRIMARY KEY,
+                                         ->   Cust_name VARCHAR(255),
+                                         ->   Cust_Address VARCHAR(255)
+                                         -> );
+Query OK, 0 rows affected (0.0500 sec)
+ MySQL  localhost:3306 ssl  tbd_eva1  SQL > CREATE TABLE Orders (
+                                         ->   Order_ID INT PRIMARY KEY,
+                                         ->   Order_Date DATE,
+                                         ->   Cust_ID INT,
+                                         ->   FOREIGN KEY (Cust_ID) REFERENCES Customers(Cust_ID));
+Query OK, 0 rows affected (0.0692 sec)
+ MySQL  localhost:3306 ssl  tbd_eva1  SQL > show tables;
++--------------------+
+| Tables_in_tbd_eva1 |
++--------------------+
+| customers          |
+| orders             |
+| students           |
++--------------------+
+3 rows in set (0.0038 sec)
+ MySQL  localhost:3306 ssl  tbd_eva1  SQL > CREATE TABLE Order_Items (
+                                         ->   Order_ID INT,
+                                         ->   Item_ID INT PRIMARY KEY,
+                                         ->   FOREIGN KEY (Order_ID) REFERENCES Orders(Order_ID));
+Query OK, 0 rows affected (0.0534 sec)
+ MySQL  localhost:3306 ssl  tbd_eva1  SQL > show tables;
++--------------------+
+| Tables_in_tbd_eva1 |
++--------------------+
+| customers          |
+| order_items        |
+| orders             |
+| students           |
++--------------------+
+4 rows in set (0.0017 sec)
+ MySQL  localhost:3306 ssl  tbd_eva1  SQL > INSERT INTO Customers (Cust_ID, Cust_name, Cust_Address) VALUES
+                                         -> (2, 'Value Furniture', 'Plano, TX'),
+                                         -> (6, 'Value Furniture', 'Boulder, CO');^C
+ MySQL  localhost:3306 ssl  tbd_eva1  SQL > INSERT INTO Customers (Cust_ID, Cust_name, Cust_Address) VALUES
+                                         -> (2, "Value Furniture", "Plano, TX"),
+                                         -> (6, "Value Furniture", "Boulder, CO"));
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')' at line 3
+ MySQL  localhost:3306 ssl  tbd_eva1  SQL > INSERT INTO Customers (Cust_ID, Cust_name, Cust_Address) VALUES
+                                         -> (2, "Value Furniture", "Plano, TX"),
+                                         -> (6, "Value Furniture", "Boulder, CO");
+Query OK, 2 rows affected (0.0100 sec)
+
+Records: 2  Duplicates: 0  Warnings: 0
+ MySQL  localhost:3306 ssl  tbd_eva1  SQL > select * from customer;
+ERROR: 1146 (42S02): Table 'tbd_eva1.customer' doesn't exist
+ MySQL  localhost:3306 ssl  tbd_eva1  SQL > select from customer";
+                                         "> ^C
+ MySQL  localhost:3306 ssl  tbd_eva1  SQL > select from customer;
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'from customer' at line 1
+ MySQL  localhost:3306 ssl  tbd_eva1  SQL > select * from Customers;
++---------+-----------------+--------------+
+| Cust_ID | Cust_name       | Cust_Address |
++---------+-----------------+--------------+
+|       2 | Value Furniture | Plano, TX    |
+|       6 | Value Furniture | Boulder, CO  |
++---------+-----------------+--------------+
+2 rows in set (0.0016 sec)
+ MySQL  localhost:3306 ssl  tbd_eva1  SQL > INSERT INTO Orders (Order_ID, Order_Date, Cust_ID) VALUES
+                                         -> (1006, "2004-10-24", 2),
+                                         -> (1007, "2004-10-25", 6),
+                                         -> (1008, "2004-11-01", 2);
+Query OK, 3 rows affected (0.0068 sec)
+
+Records: 3  Duplicates: 0  Warnings: 0
+ MySQL  localhost:3306 ssl  tbd_eva1  SQL > INSERT INTO Order_Items (Order_ID, Item_ID) VALUES
+                                         -> (1006, 1),
+                                         -> (1006, 2),
+                                         -> (1007, 3),
+                                         -> (1008, 4);
+Query OK, 4 rows affected (0.0076 sec)
+
+Records: 4  Duplicates: 0  Warnings: 0
+ MySQL  localhost:3306 ssl  tbd_eva1  SQL > show tables;
++--------------------+
+| Tables_in_tbd_eva1 |
++--------------------+
+| customers          |
+| order_items        |
+| orders             |
+| students           |
++--------------------+
+4 rows in set (0.0016 sec)
+ MySQL  localhost:3306 ssl  tbd_eva1  SQL > select * from Customers;
++---------+-----------------+--------------+
+| Cust_ID | Cust_name       | Cust_Address |
++---------+-----------------+--------------+
+|       2 | Value Furniture | Plano, TX    |
+|       6 | Value Furniture | Boulder, CO  |
++---------+-----------------+--------------+
+2 rows in set (0.0005 sec)
+ MySQL  localhost:3306 ssl  tbd_eva1  SQL > select * from Orders;
++----------+------------+---------+
+| Order_ID | Order_Date | Cust_ID |
++----------+------------+---------+
+|     1006 | 2004-10-24 |       2 |
+|     1007 | 2004-10-25 |       6 |
+|     1008 | 2004-11-01 |       2 |
++----------+------------+---------+
+3 rows in set (0.0004 sec)
+ MySQL  localhost:3306 ssl  tbd_eva1  SQL > select from * Order_Items;
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'from * Order_Items' at line 1
+ MySQL  localhost:3306 ssl  tbd_eva1  SQL > select * from Order_Items;
++----------+---------+
+| Order_ID | Item_ID |
++----------+---------+
+|     1006 |       1 |
+|     1006 |       2 |
+|     1007 |       3 |
+|     1008 |       4 |
++----------+---------+
+4 rows in set (0.0004 sec)
+ MySQL  localhost:3306 ssl  tbd_eva1  SQL > DROP TABLE Order_Items;
+Query OK, 0 rows affected (0.0249 sec)
+ MySQL  localhost:3306 ssl  tbd_eva1  SQL > show tables;
++--------------------+
+| Tables_in_tbd_eva1 |
++--------------------+
+| customers          |
+| orders             |
+| students           |
++--------------------+
+3 rows in set (0.0015 sec)
+
+ MySQL  localhost:3306 ssl  tbd_eva1  SQL > Create table EmployeeJobs (EmployeeID varchar(10), JobCode varchar (10), StateCode int, primary key (EmployeeID, JobCode), foreign key (EmployeeID) references Employees(EmployeeID),  FOREIGN KEY (JobCode) REFERENCES Jobs(JobCode), FOREIGN KEY (StateCode) REFERENCES States(StateCode));
+ERROR: 3734 (HY000): Failed to add the foreign key constraint. Missing column 'StateCode' for constraint 'employeejobs_ibfk_3' in the referenced table 'states'
+ MySQL  localhost:3306 ssl  tbd_eva1  SQL > CREATE TABLE EmployeeJobs (
+                                         -> EmployeeID VARCHAR(10),
+                                         -> JobCode VARCHAR(10),
+                                         -> StateCode INT,
+                                         -> PRIMARY KEY (EmployeeID, JobCode),
+                                         -> FOREIGN KEY (EmployeeID) REFERENCES Employees(EmployeeID),
+                                         -> FOREIGN KEY (JobCode) REFERENCES Jobs(JobCode),
+                                         -> FOREIGN KEY (StateCode) REFERENCES States(StateCode));
+ERROR: 3734 (HY000): Failed to add the foreign key constraint. Missing column 'StateCode' for constraint 'employeejobs_ibfk_3' in the referenced table 'states'
+ MySQL  localhost:3306 ssl  tbd_eva1  SQL > desc states;
++------------+--------------+------+-----+---------+-------+
+| Field      | Type         | Null | Key | Default | Extra |
++------------+--------------+------+-----+---------+-------+
+| StatesCode | int          | NO   | PRI | NULL    |       |
+| StateName  | varchar(150) | YES  |     | NULL    |       |
++------------+--------------+------+-----+---------+-------+
+2 rows in set (0.0033 sec)
+ MySQL  localhost:3306 ssl  tbd_eva1  SQL > Alter table States change column StatesCode StateCode int;
+Query OK, 0 rows affected (0.0173 sec)
+
+Records: 0  Duplicates: 0  Warnings: 0
+ MySQL  localhost:3306 ssl  tbd_eva1  SQL > CREATE TABLE EmployeeJobs ( EmployeeID VARCHAR(10), JobCode VARCHAR(10), StateCode INT, PRIMARY KEY (EmployeeID, JobCode), FOREIGN KEY (EmployeeID) REFERENCES Employees(EmployeeID), FOREIGN KEY (JobCode) REFERENCES Jobs(JobCode), FOREIGN KEY (StateCode) REFERENCES States(StateCode));
+Query OK, 0 rows affected (0.0565 sec)
+ MySQL  localhost:3306 ssl  tbd_eva1  SQL > INSERT INTO Employees (EmployeeID, Name) VALUES
+                                         -> ('E001', 'Alice'));
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')' at line 2
+ MySQL  localhost:3306 ssl  tbd_eva1  SQL > INSERT INTO Employees (EmployeeID, Name) VALUES ('E001', 'Alice');
+Query OK, 1 row affected (0.0079 sec)
+ MySQL  localhost:3306 ssl  tbd_eva1  SQL > INSERT INTO Employees (EmployeeID, Name) VALUES ('E002', 'Bob');
+Query OK, 1 row affected (0.0071 sec)
+ MySQL  localhost:3306 ssl  tbd_eva1  SQL > INSERT INTO Employees (EmployeeID, Name) VALUES ('E003', 'Alice');
+Query OK, 1 row affected (0.0055 sec)
+ MySQL  localhost:3306 ssl  tbd_eva1  SQL > INSERT INTO Jobs (JobCode, JobTitle) VALUES ('J01', 'Chef');
+Query OK, 1 row affected (0.0079 sec)
+ MySQL  localhost:3306 ssl  tbd_eva1  SQL > INSERT INTO Jobs (JobCode, JobTitle) VALUES ('J02', 'Waiter');
+Query OK, 1 row affected (0.0060 sec)
+ MySQL  localhost:3306 ssl  tbd_eva1  SQL > INSERT INTO Jobs (JobCode, JobTitle) VALUES ('J03', 'Bartender');
+Query OK, 1 row affected (0.0056 sec)
+ MySQL  localhost:3306 ssl  tbd_eva1  SQL > INSERT INTO States (StateCode, StateName) VALUES (26, 'Michigan');
+Query OK, 1 row affected (0.0071 sec)
+ MySQL  localhost:3306 ssl  tbd_eva1  SQL > INSERT INTO States (StateCode, StateName) VALUES (56, 'Wyoming');
+Query OK, 1 row affected (0.0068 sec)
+ MySQL  localhost:3306 ssl  tbd_eva1  SQL > INSERT INTO EmployeeJobs (EmployeeID, JobCode, StateCode) VALUES ('E001', 'J01', 26);
+Query OK, 1 row affected (0.0055 sec)
+ MySQL  localhost:3306 ssl  tbd_eva1  SQL > INSERT INTO EmployeeJobs (EmployeeID, JobCode, StateCode) VALUES ('E001', 'J02', 26);
+Query OK, 1 row affected (0.0077 sec)
+ MySQL  localhost:3306 ssl  tbd_eva1  SQL > INSERT INTO EmployeeJobs (EmployeeID, JobCode, StateCode) VALUES ('E002', 'J02', 56);
+Query OK, 1 row affected (0.0065 sec)
+ MySQL  localhost:3306 ssl  tbd_eva1  SQL > INSERT INTO EmployeeJobs (EmployeeID, JobCode, StateCode) VALUES ('E002', 'J03', 56);
+Query OK, 1 row affected (0.0097 sec)
+ MySQL  localhost:3306 ssl  tbd_eva1  SQL > INSERT INTO EmployeeJobs (EmployeeID, JobCode, StateCode) VALUES ('E003', 'J01', 56);
+Query OK, 1 row affected (0.0070 sec)
+ MySQL  localhost:3306 ssl  tbd_eva1  SQL > select * from Employees;
++------------+-------+
+| EmployeeID | Name  |
++------------+-------+
+| E001       | Alice |
+| E002       | Bob   |
+| E003       | Alice |
++------------+-------+
+3 rows in set (0.0009 sec)
+ MySQL  localhost:3306 ssl  tbd_eva1  SQL > select * from States;
++-----------+-----------+
+| StateCode | StateName |
++-----------+-----------+
+|        26 | Michigan  |
+|        56 | Wyoming   |
++-----------+-----------+
+2 rows in set (0.0008 sec)
+ MySQL  localhost:3306 ssl  tbd_eva1  SQL > select * from EmployeedJobs;
+ERROR: 1146 (42S02): Table 'tbd_eva1.employeedjobs' doesn't exist
+ MySQL  localhost:3306 ssl  tbd_eva1  SQL > select * from EmployeeJobs;
++------------+---------+-----------+
+| EmployeeID | JobCode | StateCode |
++------------+---------+-----------+
+| E001       | J01     |        26 |
+| E001       | J02     |        26 |
+| E002       | J02     |        56 |
+| E002       | J03     |        56 |
+| E003       | J01     |        56 |
++------------+---------+-----------+
